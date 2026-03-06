@@ -1,6 +1,6 @@
 ---
 name: managing-github-events
-description: "Enforces strict GitHub event management rules across all projects. Covers commits (Conventional Commits v1.0.0), branches, issues, PRs, releases (SemVer 2.0.0), changelog (Keep a Changelog), security (SECURITY.md), CI/CD, repository hygiene (including avoiding redundant prefixes like 'gh_'), and AI agent compliance (Gemini CLI, Claude Code, Amp, iFlow CLI). Use when performing any git operation, creating commits, branches, PRs, issues, releases, changelogs, or managing GitHub repositories."
+description: "Enforces strict GitHub event management rules across all projects. Covers commits (Conventional Commits v1.0.0), branches, issues, PRs, releases (SemVer 2.0.0), changelog (Keep a Changelog), security (SECURITY.md), CI/CD, repository hygiene (including avoiding redundant prefixes like 'gh_'), and AI agent compliance (OpenAI Codex, Qwen Code, Amp, Claude Code, Gemini CLI, iFlow CLI). Use when performing any git operation, creating commits, branches, PRs, issues, releases, changelogs, or managing GitHub repositories."
 allowed-tools:
   - Bash
   - Read
@@ -224,20 +224,26 @@ the reference file contains full instructions for each agent.
 
 | Agent | Context File | Location |
 |-------|-------------|----------|
-| Gemini CLI | `GEMINI.md` | Project root |
-| Claude Code | `CLAUDE.md` | Project root |
+| OpenAI Codex | `CODEX.md` | Project root |
+| Qwen Code | `QWEN.md` | Project root |
 | Amp (ampcode) | `AGENTS.md` | Project root |
+| Claude Code | `CLAUDE.md` | Project root |
+| Gemini CLI | `GEMINI.md` | Project root |
 | iFlow CLI | `IFLOW.md` | Project root |
 
 Each agent's context file SHOULD include a reference to this skill's rules. This skill is designed to be used across multiple AI CLI platforms.
 
 ### Per-Agent Summary
 
-**Gemini CLI**: Uses Shell tool for git/gh commands. ⚠️ Default behavior may use `git add .` — MUST be explicitly instructed NOT to. Use GEMINI.md to enforce rules.
+**OpenAI Codex**: Advanced coding agent built on GPT-5.3 Codex (released Feb 2026). Capable of complex agentic coding tasks including planning, building features, refactoring, reviews, and releases. Supports parallel task execution and can work on multiple software engineering tasks simultaneously.
+
+**Qwen Code**: AI-powered command-line workflow tool adapted from Gemini CLI. Specialized for understanding codebases, generating new code, and solving complex algorithmic challenges using chain-of-thought prompting. Offers enhanced parsing and workflow support tailored to Qwen-Coder capabilities.
+
+**Amp (ampcode)**: Uses Bash tool for git/gh commands. Features agentic code review, clickable diagrams, fast search subagents. Uses AGENTS.md + Skills system. This very skill enforces compliance. Permission system controls tool access.
 
 **Claude Code**: Has built-in git integration. Uses CLAUDE.md for instructions. Has permission tiers (read-only/edit/shell). Custom slash commands can enforce workflows.
 
-**Amp (ampcode)**: Uses Bash tool for git/gh commands. Uses AGENTS.md + Skills system. This very skill enforces compliance. Permission system controls tool access.
+**Gemini CLI**: Uses Shell tool for git/gh commands. ⚠️ Default behavior may use `git add .` — MUST be explicitly instructed NOT to. Use GEMINI.md to enforce rules.
 
 **iFlow CLI**: Uses Shell tool for git/gh commands. Uses IFLOW.md for instructions. Has 4 modes (YOLO/Accepting Edits/Plan/Default). SubAgent system available.
 
