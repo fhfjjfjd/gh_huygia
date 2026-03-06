@@ -1,10 +1,10 @@
-# huygia
+# Managing GitHub Events — Strict Ruleset
 
 A **strict GitHub event management ruleset** enforcing non-negotiable standards for commits, branches, issues, PRs, releases, changelogs, security, CI/CD, and repository hygiene across all projects.
 
 ## 📋 Overview
 
-`huygia` is a comprehensive skill that ensures consistent, professional GitHub workflows by enforcing:
+This comprehensive skill ensures consistent, professional GitHub workflows by enforcing:
 
 - ✅ **Conventional Commits v1.0.0** for all commit messages
 - ✅ **Semantic Versioning (SemVer 2.0.0)** for releases
@@ -13,7 +13,7 @@ A **strict GitHub event management ruleset** enforcing non-negotiable standards 
 - ✅ **Professional PR & issue management**
 - ✅ **Security best practices** (SECURITY.md, secret scanning)
 - ✅ **CI/CD standards** (pinned actions, permissions, timeouts)
-- ✅ **Repository hygiene** (mandatory files, .gitignore, LICENSE)
+- ✅ **Repository hygiene** (mandatory files, .gitignore, LICENSE, avoiding redundant prefixes)
 - ✅ **AI agent compliance** (Gemini CLI, Claude Code, Amp, iFlow CLI)
 
 **Violations are REJECTED. No exceptions.** — RFC 2119 compliance.
@@ -222,10 +222,11 @@ python3 scripts/audit-repo.py --commits 20
 - `.gitignore` MUST exist and cover: OS files, IDE configs, build artifacts, dependencies, `.env`
 - `README.md` MUST exist (project name, description, setup, usage, license)
 - `LICENSE` file MUST exist in project root
+- Project names SHOULD avoid redundant prefixes like 'gh_' when the context is already clear
 - **FORBIDDEN**: binary blobs (images >100KB, compiled binaries, archives)
 - **FORBIDDEN**: committed `node_modules/`, `vendor/`, `__pycache__/`, `.venv/`, build outputs
 
-→ Full spec: `reference/repo-hygiene-rules.md`
+→ Full spec: `reference/repo-hygiene-rules.md` and `reference/no-gh-prefix-rules.md`
 
 ---
 
@@ -264,6 +265,7 @@ Complete specifications for each section:
 - `reference/security-rules.md` — SECURITY.md template, response timelines
 - `reference/cicd-rules.md` — Workflow examples
 - `reference/repo-hygiene-rules.md` — Checklists
+- `reference/no-gh-prefix-rules.md` — Guidelines for avoiding redundant prefixes
 - `reference/ai-agent-rules.md` — Per-agent instructions
 
 ---
