@@ -14,7 +14,7 @@ This comprehensive skill ensures consistent, professional GitHub workflows by en
 - ✅ **Security best practices** (SECURITY.md, secret scanning)
 - ✅ **CI/CD standards** (pinned actions, permissions, timeouts)
 - ✅ **Repository hygiene** (mandatory files, .gitignore, LICENSE, avoiding redundant prefixes)
-- ✅ **AI agent compliance** (Gemini CLI, Claude Code, Amp, iFlow CLI)
+- ✅ **AI agent compliance** (OpenAI Codex, Qwen Code, Amp, Claude Code, Gemini CLI, iFlow CLI)
 
 **Violations are REJECTED. No exceptions.** — RFC 2119 compliance.
 
@@ -208,11 +208,11 @@ Use this skill when:
 
 ---
 
-## 🤖 iFlow CLI Skill Usage
+## 🤖 AI Agent Compliance
 
-This skill is designed for use with iFlow CLI to ensure consistent, professional GitHub workflows. When using iFlow CLI, this skill will enforce all the rules defined below.
+This skill is designed for use with multiple AI CLI platforms to ensure consistent, professional GitHub workflows. When using any of these platforms, this skill will enforce all the rules defined below.
 
-**Universal Rules for iFlow CLI**:
+**Universal Rules for AI Agents**:
 1. MUST use `git add <specific-file>` — FORBIDDEN: `git add -A`, `git add .`
 2. MUST follow Conventional Commits exactly
 3. MUST create branches with correct `type/` prefix before work
@@ -274,4 +274,4 @@ The key words **"MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", 
 
 ## 📄 Usage Rights
 
-This skill is created by Gia Huy for multiple AI CLI platforms including Gemini CLI, Claude Code, and iFlow CLI. When using this skill in any of these platforms, you agree to follow the rules and guidelines defined herein.
+This skill is created by Gia Huy for multiple AI CLI platforms including OpenAI Codex (with CLI version), Qwen Code, Amp, Claude Code, Gemini CLI, and iFlow CLI. When using this skill in any of these platforms, you agree to follow the rules and guidelines defined herein.
