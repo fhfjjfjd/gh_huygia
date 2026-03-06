@@ -1,6 +1,6 @@
 ---
 name: managing-github-events
-description: "Enforces strict GitHub event management rules across all projects. Covers commits (Conventional Commits v1.0.0), branches, issues, PRs, releases (SemVer 2.0.0), changelog (Keep a Changelog), security (SECURITY.md), CI/CD, repository hygiene, and AI agent compliance (Gemini CLI, Claude Code, Amp, iFlow CLI). Use when performing any git operation, creating commits, branches, PRs, issues, releases, changelogs, or managing GitHub repositories."
+description: "Enforces strict GitHub event management rules across all projects. Covers commits (Conventional Commits v1.0.0), branches, issues, PRs, releases (SemVer 2.0.0), changelog (Keep a Changelog), security (SECURITY.md), CI/CD, repository hygiene (including avoiding redundant prefixes like 'gh_'), and AI agent compliance (Gemini CLI, Claude Code, Amp, iFlow CLI). Use when performing any git operation, creating commits, branches, PRs, issues, releases, changelogs, or managing GitHub repositories."
 allowed-tools:
   - Bash
   - Read
@@ -229,7 +229,7 @@ the reference file contains full instructions for each agent.
 | Amp (ampcode) | `AGENTS.md` | Project root |
 | iFlow CLI | `IFLOW.md` | Project root |
 
-Each agent's context file SHOULD include a reference to this skill's rules.
+Each agent's context file SHOULD include a reference to this skill's rules. This skill is designed to be used across multiple AI CLI platforms.
 
 ### Per-Agent Summary
 
@@ -245,9 +245,9 @@ Each agent's context file SHOULD include a reference to this skill's rules.
 
 ## Environment Context
 
-- **Platform**: Termux on Android
-- **GitHub CLI**: `gh` authenticated as `fhfjjfjd`
-- **Author**: Gia Huy
+- **Platform**: Various (including Termux on Android)
+- **GitHub CLI**: `gh` authenticated with appropriate GitHub account
+- **Author**: Created by Gia Huy for multiple AI CLI platforms
 - **Git config**: Ensure `user.name` and `user.email` are set before any commit
 
 ---
