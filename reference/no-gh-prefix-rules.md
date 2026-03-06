@@ -1,39 +1,34 @@
 # No 'gh_' Prefix Rules
 
 ## Overview
-This document defines rules to ensure project names do not use the 'gh_' prefix. 
-These rules are designed to enforce naming conventions that avoid redundant prefixes 
-in project names, repository names, and related identifiers.
+This document defines best practices for project naming to avoid redundant prefixes in project names.
+When the context is already clear (such as in a GitHub repository), using prefixes like 'gh_' is
+unnecessary and adds redundancy.
 
-## Rules
+## Guidelines
 
 ### Project Naming
-- Project names MUST NOT start with the prefix 'gh_'
-- Repository names MUST NOT start with the prefix 'gh_'
-- When creating new projects, avoid using 'gh_' as a prefix
-- Existing projects with 'gh_' prefix SHOULD be renamed to remove the prefix
-
-### Enforcement
-- All project names will be validated to ensure they do not start with 'gh_'
-- Repository creation will fail if the name starts with 'gh_'
-- CI/CD pipelines SHOULD include a check to validate project name format
-- Naming validation tools MUST reject any name starting with 'gh_'
+- Project names SHOULD be concise and self-explanatory without redundant prefixes
+- When creating new projects in GitHub context, avoid using 'gh_' as a prefix
+- Use meaningful names that reflect the project's purpose rather than its hosting platform
+- Existing projects with 'gh_' prefix MAY consider renaming to remove the prefix for consistency
 
 ### Rationale
-- The 'gh_' prefix is redundant as the context of GitHub is already understood
+- The 'gh_' prefix is redundant when the project is already in a GitHub context
 - Shorter, cleaner project names are preferred
-- Avoiding prefixes reduces naming confusion and standardizes project naming
-- Makes project names more flexible for use in different contexts
+- Avoiding prefixes reduces naming redundancy and standardizes project naming
+- Makes project names more portable across different platforms and contexts
 
 ### Examples
 ```
-✅ VALID names:
+✅ RECOMMENDED names:
 - project-name
 - awesome-tool
 - api-service
 - mobile-app
+- data-processor
 
-❌ INVALID names:
+❌ AVOID names with redundant prefixes:
 - gh_project-name
 - gh-awesome-tool
 - gh_api-service
@@ -41,7 +36,7 @@ in project names, repository names, and related identifiers.
 ```
 
 ### Migration
-- Existing projects with 'gh_' prefix SHOULD be migrated to new names
+- Existing projects with 'gh_' prefix MAY be migrated to new names as needed
 - Update all references to the project name in documentation, code, and CI/CD configurations
 - Create redirects if necessary to maintain backward compatibility
 - Update all team members and stakeholders about the name change

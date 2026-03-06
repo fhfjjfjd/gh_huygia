@@ -199,6 +199,7 @@ See all files in @reference/ directory for full specification, naming convention
 - `.gitignore` MUST exist — MUST cover: OS files, IDE configs, build artifacts, dependencies, `.env`
 - `README.md` MUST exist — MUST include: project name, description, setup, usage, license
 - `LICENSE` file MUST exist in project root
+- Project names SHOULD avoid redundant prefixes like 'gh_' when the context is already clear
 - FORBIDDEN: binary blobs in git (images >100KB, compiled binaries, archives)
 - FORBIDDEN: committed `node_modules/`, `vendor/`, `__pycache__/`, `.venv/`, build outputs
 
