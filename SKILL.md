@@ -192,7 +192,7 @@ See @reference/cicd-rules.md for full specification and examples.
 
 ## 9. Repository Hygiene
 
-See @reference/repo-hygiene-rules.md for full specification and checklists.
+See all files in @reference/ directory for full specification, naming conventions, and rules.
 
 ### Core Rules
 

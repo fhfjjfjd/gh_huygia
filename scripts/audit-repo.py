@@ -101,7 +101,7 @@ def get_repo_slug(cwd: str = ".") -> str:
     return slug if code == 0 else ""
 
 
-def is_gh_repo(path: str) -> bool:
+def is_repo(path: str) -> bool:
     """Check if path is inside a GitHub repository."""
     return bool(get_repo_slug(path))
 
@@ -341,7 +341,7 @@ def main() -> None:
 
     print(f"\n{BOLD}{CYAN}🔍 Auditing repository: {repo}{NC}\n")
 
-    if not is_gh_repo(repo):
+    if not is_repo(repo):
         print(f"{RED}❌ Not a GitHub repository (gh CLI cannot detect repo): {repo}{NC}")
         sys.exit(1)
 

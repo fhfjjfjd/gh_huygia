@@ -1,10 +1,10 @@
-# gh_huygia
+# huygia
 
 A **strict GitHub event management ruleset** enforcing non-negotiable standards for commits, branches, issues, PRs, releases, changelogs, security, CI/CD, and repository hygiene across all projects.
 
 ## 📋 Overview
 
-`gh_huygia` is a comprehensive skill that ensures consistent, professional GitHub workflows by enforcing:
+`huygia` is a comprehensive skill that ensures consistent, professional GitHub workflows by enforcing:
 
 - ✅ **Conventional Commits v1.0.0** for all commit messages
 - ✅ **Semantic Versioning (SemVer 2.0.0)** for releases
