@@ -22,45 +22,23 @@ This comprehensive skill ensures consistent, professional GitHub workflows by en
 
 ## 🚀 Quick Start
 
-### 1. Initialize Your Repository
+### 1. Using This Skill in iFlow CLI
 
-```bash
-python3 scripts/setup-repo.py
-```
+This skill is designed to be used with iFlow CLI for managing GitHub events. To use this skill:
 
-This script initializes your repo with:
-- All mandatory files (README.md, LICENSE, SECURITY.md, CHANGELOG.md, .gitignore)
-- GitHub labels for issue management (type:*, priority:*, status:*)
+1. Ensure you have iFlow CLI installed and configured
+2. Reference this skill when performing GitHub operations
+3. Follow the rules defined in this skill for all GitHub events
 
-### 2. Validate Commits
+### 2. Enforce Rules During Development
 
-```bash
-# Validate a specific commit message
-scripts/validate-commit-msg.sh "feat(auth): add OAuth2 login flow"
-
-# Validate current branch's last commit
-scripts/validate-commit-msg.sh
-```
-
-### 3. Validate Branch Names
-
-```bash
-# Validate a specific branch name
-scripts/validate-branch-name.sh "feat/oauth2-login"
-
-# Validate current branch
-scripts/validate-branch-name.sh
-```
-
-### 4. Audit Your Repository
-
-```bash
-# Full compliance audit
-python3 scripts/audit-repo.py
-
-# Check last 20 commits only
-python3 scripts/audit-repo.py --commits 20
-```
+Use this skill when:
+- Creating commit messages (follow Conventional Commits)
+- Managing branches (use proper naming)
+- Creating pull requests and issues
+- Managing releases and changelogs
+- Setting up repository hygiene
+- Working with AI agents
 
 ---
 
@@ -230,18 +208,11 @@ python3 scripts/audit-repo.py --commits 20
 
 ---
 
-## 🤖 AI Agent Compliance
+## 🤖 iFlow CLI Skill Usage
 
-ALL AI coding agents MUST comply with this ruleset. Supported agents:
+This skill is designed for use with iFlow CLI to ensure consistent, professional GitHub workflows. When using iFlow CLI, this skill will enforce all the rules defined below.
 
-| Agent | Context File | Location |
-|-------|-------------|----------|
-| Gemini CLI | `GEMINI.md` | Project root |
-| Claude Code | `CLAUDE.md` | Project root |
-| Amp (ampcode) | `AGENTS.md` | Project root |
-| iFlow CLI | `IFLOW.md` | Project root |
-
-**Universal Rules**:
+**Universal Rules for iFlow CLI**:
 1. MUST use `git add <specific-file>` — FORBIDDEN: `git add -A`, `git add .`
 2. MUST follow Conventional Commits exactly
 3. MUST create branches with correct `type/` prefix before work
@@ -270,45 +241,14 @@ Complete specifications for each section:
 
 ---
 
-## ⚙️ Scripts
-
-### Bash Scripts (validation)
-
-```bash
-# Validate commit message
-scripts/validate-commit-msg.sh "feat(auth): add login"
-scripts/validate-commit-msg.sh  # Validates last commit on current branch
-
-# Validate branch name
-scripts/validate-branch-name.sh "feat/oauth2-login"
-scripts/validate-branch-name.sh  # Validates current branch
-```
-
-### Python Scripts (setup & audit)
-
-```bash
-# Initialize repo with mandatory files + GitHub labels
-python3 scripts/setup-repo.py
-
-# Audit repo for full compliance
-python3 scripts/audit-repo.py
-
-# Check last 20 commits only
-python3 scripts/audit-repo.py --commits 20
-```
-
-All Python scripts are **pure local logic** — no API calls, no LLM dependencies.
-
----
-
 ## 🌍 Environment
 
-- **Platform**: Termux on Android
-- **GitHub CLI**: `gh` authenticated as `fhfjjfjd`
-- **Author**: Gia Huy
-- **Language**: Python (81.9%) + Shell (18.1%)
+This skill is designed to work with iFlow CLI in various environments:
+- Can be used on any platform that supports iFlow CLI
+- Requires GitHub CLI for some operations
+- Works with standard git configurations
 
-Before committing, ensure git config is set:
+Before using this skill, ensure git config is set:
 ```bash
 git config user.name "Your Name"
 git config user.email "your.email@example.com"
@@ -332,6 +272,6 @@ The key words **"MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", 
 
 ---
 
-## 📄 License
+## 📄 Usage Rights
 
-This project is maintained by Gia Huy. Refer to the LICENSE file for details.
+This skill is part of the iFlow CLI ecosystem. When using this skill in iFlow CLI, you agree to follow the rules and guidelines defined herein.
