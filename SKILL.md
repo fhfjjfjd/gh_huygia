@@ -1,6 +1,6 @@
 ---
 name: managing-github-events
-description: "Enforces strict GitHub event management rules across all projects. Covers commits (Conventional Commits v1.0.0), branches, issues, PRs, releases (SemVer 2.0.0), changelog (Keep a Changelog), security (SECURITY.md), CI/CD, repository hygiene (including avoiding redundant prefixes like 'gh_'), and AI agent compliance (OpenAI Codex, Qwen Code, Amp, Claude Code, Gemini CLI, iFlow CLI). Use when performing any git operation, creating commits, branches, PRs, issues, releases, changelogs, or managing GitHub repositories."
+description: "Enforces strict GitHub event management rules across all projects. Covers commits (Conventional Commits v1.0.0), branches, issues, PRs, releases (SemVer 2.0.0), changelog (Keep a Changelog), security (SECURITY.md), CI/CD, repository hygiene (including avoiding redundant prefixes like 'gh_'), mobile development specific rules, and AI agent compliance (OpenAI Codex, Qwen Code, Amp, Claude Code, Gemini CLI, iFlow CLI). Use when performing any git operation, creating commits, branches, PRs, issues, releases, changelogs, or managing GitHub repositories."
 allowed-tools:
   - Bash
   - Read
@@ -199,9 +199,13 @@ See all files in @reference/ directory for full specification, naming convention
 - `.gitignore` MUST exist — MUST cover: OS files, IDE configs, build artifacts, dependencies, `.env`
 - `README.md` MUST exist — MUST include: project name, description, setup, usage, license
 - `LICENSE` file MUST exist in project root
+- `CHANGELOG.md` file MUST exist in project root
+- `SECURITY.md` file MUST exist in project root
 - Project names SHOULD avoid redundant prefixes like 'gh_' when the context is already clear
 - FORBIDDEN: binary blobs in git (images >100KB, compiled binaries, archives)
 - FORBIDDEN: committed `node_modules/`, `vendor/`, `__pycache__/`, `.venv/`, build outputs
+
+For mobile development projects, also see @reference/mobile-development-rules.md
 
 ---
 

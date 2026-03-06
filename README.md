@@ -200,6 +200,8 @@ Use this skill when:
 - `.gitignore` MUST exist and cover: OS files, IDE configs, build artifacts, dependencies, `.env`
 - `README.md` MUST exist (project name, description, setup, usage, license)
 - `LICENSE` file MUST exist in project root
+- `CHANGELOG.md` file MUST exist in project root
+- `SECURITY.md` file MUST exist in project root
 - Project names SHOULD avoid redundant prefixes like 'gh_' when the context is already clear
 - **FORBIDDEN**: binary blobs (images >100KB, compiled binaries, archives)
 - **FORBIDDEN**: committed `node_modules/`, `vendor/`, `__pycache__/`, `.venv/`, build outputs
