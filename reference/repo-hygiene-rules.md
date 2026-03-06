@@ -84,11 +84,37 @@ yarn-error.log*
 
 ---
 
+## Project Naming Conventions
+
+Project names SHOULD avoid redundant prefixes like 'gh_' when the context is already clear (such as in a GitHub repository). This makes project names more concise and avoids naming redundancy.
+
+### Guidelines
+- Use meaningful names that reflect the project's purpose rather than its hosting platform
+- Project names SHOULD be concise and self-explanatory without redundant prefixes
+- Avoid using 'gh_' as a prefix when creating new projects in GitHub context
+- Existing projects with 'gh_' prefix MAY consider renaming to remove the prefix for consistency
+
+### Examples
+```
+✅ RECOMMENDED names:
+- project-name
+- awesome-tool
+- api-service
+- mobile-app
+- data-processor
+
+❌ AVOID names with redundant prefixes:
+- gh_project-name
+- gh-awesome-tool
+- gh_api-service
+- gh_mobile-app
+```
+
 ## README.md Requirements
 
 Every README.md MUST include at minimum:
 
-1. **Project Name** — clear, descriptive title
+1. **Project Name** — clear, descriptive title (following naming conventions above)
 2. **Description** — what the project does (1-3 sentences)
 3. **Installation / Setup** — how to get it running
 4. **Usage** — basic usage examples
