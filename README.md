@@ -274,4 +274,4 @@ The key words **"MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", 
 
 ## 📄 Usage Rights
 
-This skill is part of the iFlow CLI ecosystem. When using this skill in iFlow CLI, you agree to follow the rules and guidelines defined herein.
+This skill is created by Gia Huy for multiple AI CLI platforms including Gemini CLI, Claude Code, and iFlow CLI. When using this skill in any of these platforms, you agree to follow the rules and guidelines defined herein.
