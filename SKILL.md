@@ -235,7 +235,7 @@ Each agent's context file SHOULD include a reference to this skill's rules. This
 
 ### Per-Agent Summary
 
-**OpenAI Codex**: Cloud-based software engineering agent that can perform multiple tasks in parallel. Supports writing features, answering questions about codebases, fixing bugs, and proposing changes for review. Each task runs in a separate sandboxed cloud environment with your repository pre-loaded. Available for ChatGPT Pro, Team, and Enterprise users. Can be guided by AGENTS.md files in your repository to understand how to navigate your codebase.
+**OpenAI Codex**: Cloud-based software engineering agent that can perform multiple tasks in parallel. Supports writing features, answering questions about codebases, fixing bugs, and proposing changes for review. Each task runs in a separate sandboxed cloud environment with your repository pre-loaded. Available for ChatGPT Pro, Team, and Enterprise users. Can be guided by AGENTS.md files in your repository to understand how to navigate your codebase. Also includes a CLI version (Codex CLI) that runs on your local terminal, bringing the power of OpenAI models to your local workflow.
 
 **Qwen Code**: AI-powered command-line workflow tool adapted from Gemini CLI. Specialized for understanding codebases, generating new code, and solving complex algorithmic challenges using chain-of-thought prompting. Offers enhanced parsing and workflow support tailored to Qwen-Coder capabilities.
 
