@@ -1,393 +1,345 @@
-# AI Coding Agent Compliance Rules
+# AI Agent Rules - Detailed Per-Agent Instructions
 
-> ALL AI coding agents MUST comply with every rule defined in the parent SKILL.md.
-> This file provides specific instructions for each agent on HOW to comply.
+> **RFC 2119 Compliance**: The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+> "SHOULD", "SHOULD NOT", "FORBIDDEN", "REJECTED" in this document are to be interpreted as
+> described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
+
+This document provides **detailed, non-negotiable** instructions for each AI coding agent.
+Each agent MUST follow these rules. Violations are REJECTED. No exceptions.
 
 ---
 
-## Universal Rules (ALL Agents MUST Follow)
+## 1. Universal Rules (ALL Agents)
 
-### 1. File Staging — FORBIDDEN: `git add -A`, `git add .`, `git add --all`
+### 1.1 Git Staging
+- ALL agents MUST use `git add <specific-file>` — FORBIDDEN: `git add -A`, `git add .`
+- Agents MUST NOT stage all files at once
+- Specific files MUST be identified by name/path
 
-Every agent MUST stage files individually:
+### 1.2 Commit Messages
+- ALL agents MUST follow Conventional Commits format exactly
+- Format: `<type>(<scope>): <description>` with optional `!` for breaking changes
+- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
 
+### 1.3 Branch Management
+- ALL agents MUST create branches with correct `type/` prefix before starting work
+- Format: `<type>/<short-kebab-case-description>`
+- Types: `feat/`, `fix/`, `hotfix/`, `refactor/`, `docs/`, `ci/`, `release/`, `experiment/`
+
+### 1.4 Pull Requests
+- ALL agents MUST use proper PR templates and full metadata
+- Title MUST follow Conventional Commits format
+- Body MUST include: summary, changes list, related issues, testing, checklist
+
+### 1.5 Issue Management
+- ALL agents MUST use `gh issue create` with full template body and proper labels
+- Issues MUST have at minimum: one `type:*` label AND one `priority:*` label
+
+---
+
+## 2. OpenAI Codex / Codex CLI
+
+### 2.1 Environment
+- Runs in cloud sandboxed environments with repository pre-loaded
+- CLI version runs locally with direct system access
+- Uses AGENTS.md files for codebase navigation guidance
+
+### 2.2 Git Integration
 ```bash
-# ✅ CORRECT — stage specific files
-git add src/auth/login.ts src/auth/login.test.ts
+# Codex MUST use specific file staging:
+git add path/to/specific-file.js
+git add another-specific-file.py
 
-# ❌ FORBIDDEN — stages everything
-git add -A
+# Codex MUST NOT use:
 git add .
+git add -A
 git add --all
 ```
 
-Before committing, MUST verify what is staged:
+### 2.3 Commit Requirements
+- Use `git commit -m "<conventional-commit-message>"`
+- Breaking changes MUST include `!` and BREAKING CHANGE footer
+- Commit messages MUST NOT exceed 72 characters in subject
 
-```bash
-git status
-git diff --cached --name-only
-```
+### 2.4 Branch Creation
+- Use `git checkout -b type/description` with proper prefix
+- Verify branch name follows kebab-case conventions
+- Push with `git push -u origin type/description`
 
-### 2. Commit Messages — Conventional Commits Format
+### 2.5 GitHub CLI Usage
+- Use `gh pr create --title "<conventional>" --body "<full template>"`
+- Use `gh issue create --title "<title>" --body "<full template>" --label "type:bug,priority:P1"`
 
-```bash
-# ✅ CORRECT
-git commit -m "feat(auth): add OAuth2 login flow"
-
-# ❌ FORBIDDEN
-git commit -m "update files"
-git commit -m "WIP"
-git commit -m "fixed stuff"
-```
-
-### 3. Branch Creation — Type Prefix Required
-
-```bash
-# ✅ CORRECT
-git checkout -b feat/oauth2-login
-
-# ❌ FORBIDDEN
-git checkout -b my-changes
-```
-
-MUST NOT commit directly to `main` or `master`.
-
-### 4. Creating PRs — Full Template Required
-
-```bash
-gh pr create \
-  --title "feat(auth): add OAuth2 login flow" \
-  --body "## Summary
-<description>
-
-## Changes
-- <change 1>
-- <change 2>
-
-## Related Issues
-Closes #42
-
-## Testing
-- [ ] Tests pass
-
-## Checklist
-- [ ] Conventional commits followed
-- [ ] No secrets committed
-- [ ] CI passes" \
-  --base main
-```
-
-### 5. Creating Issues — Template + Labels Required
-
-```bash
-gh issue create \
-  --title "fix(api): handle invalid user ID gracefully" \
-  --body "<full bug report or feature request template>" \
-  --label "type:bug,priority:P1"
-```
-
-### 6. Merging — Squash + Delete Branch
-
-```bash
-gh pr merge <number> --squash --delete-branch
-```
-
-MUST NOT merge with failing CI.
+### 2.6 File Handling
+- When reading files, Codex MUST use exact absolute paths
+- When creating files, Codex MUST verify directory structure exists
+- Codex MUST NOT create files in locations that violate project structure
 
 ---
 
-## Gemini CLI (Google)
+## 3. Qwen Code
 
-### Context File: `GEMINI.md`
+### 3.1 Environment
+- Adapted from Gemini CLI for command-line workflow
+- Specialized for understanding codebases and generating new code
+- Uses chain-of-thought prompting for complex algorithmic challenges
 
-Gemini CLI reads `GEMINI.md` in the project root for persistent instructions.
-
-### ⚠️ CRITICAL WARNING
-
-Gemini CLI's default behavior when using Shell tool may execute `git add .` or chain
-commands like `git add . && git commit`. This MUST be explicitly prevented.
-
-### How to Enforce Rules in GEMINI.md
-
-Add the following to your project's `GEMINI.md`:
-
-```markdown
-# Git Rules — STRICTLY ENFORCED
-
-## Commit Rules
-- ALL commits MUST follow Conventional Commits: <type>(<scope>): <description>
-- Allowed types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
-- Use imperative mood, no uppercase start, no period, max 72 chars
-
-## Staging Rules — CRITICAL
-- NEVER use `git add -A`, `git add .`, or `git add --all`
-- ALWAYS stage specific files: `git add <file1> <file2>`
-- ALWAYS run `git status` before committing to verify staged files
-
-## Branch Rules
-- Create branches with type prefix: feat/, fix/, hotfix/, refactor/, docs/, ci/
-- Use kebab-case, max 50 chars
-- NEVER commit directly to main
-
-## PR Rules
-- Use `gh pr create` with Conventional Commits title and full body template
-- Always include: Summary, Changes, Related Issues, Testing, Checklist
-
-## Issue Rules
-- Use `gh issue create` with full template body
-- Always include labels: --label "type:bug,priority:P1"
-```
-
-### Gemini CLI Commands
-
+### 3.2 Git Integration
 ```bash
-# Gemini CLI uses Shell tool — same as regular bash commands
-# All git and gh commands work normally
+# Qwen Code MUST use specific file staging:
+git add path/to/specific-file.ts
+git add path/to/directory/
 
-# Stage specific files (through Gemini's Shell tool)
-git add src/auth/login.ts
-
-# Commit with conventional format
-git commit -m "feat(auth): add login endpoint"
-
-# Create PR via gh CLI
-gh pr create --title "feat(auth): add login endpoint" --body "..."
-
-# Create issue via gh CLI
-gh issue create --title "fix(api): handle error" --body "..." --label "type:bug,priority:P1"
+# Qwen Code MUST NOT use:
+git add .
+git add -A
 ```
+
+### 3.3 Context File
+- Qwen Code reads `AGENTS.md` for project-specific instructions (NOT `QWEN.md`)
+- This file SHOULD include:
+  - Project architecture overview
+  - Key integration points
+  - Common patterns and anti-patterns
+  - Specific tooling requirements
+
+### 3.4 Commit Requirements
+- Use `git commit -m "<conventional-commit-message>"`
+- For breaking changes: include `!` and BREAKING CHANGE footer
+- Validate with `scripts/validate-commit-msg.sh` before committing
+
+### 3.5 Branch Management
+- Create branches with `git checkout -b type/description`
+- Use `scripts/validate-branch-name.sh` to validate branch names
+- Follow kebab-case and type prefix requirements
+
+### 3.6 Code Generation
+- Prioritize code quality and maintainability
+- Follow project-specific style guides
+- Include appropriate error handling and edge case coverage
+- Add meaningful comments and documentation
 
 ---
 
-## Claude Code (Anthropic)
+## 4. Amp (ampcode)
 
-### Context File: `CLAUDE.md`
+### 4.1 Environment
+- Uses Bash tool for git/gh commands
+- Features agentic code review capabilities
+- Includes clickable diagrams and fast search subagents
+- Uses AGENTS.md + Skills system
+- Implements permission system for tool access
 
-Claude Code reads `CLAUDE.md` in the project root for persistent instructions.
+### 4.2 Git Integration
+- Use `git add <specific-file>` exclusively
+- Verify file existence before adding
+- Use `git status` to verify staged files before commit
 
-### Built-in Git Integration
+### 4.3 Commit Process
+- Validate commit message with `scripts/validate-commit-msg.sh`
+- Use `git commit -m "<message>"` with validated message
+- Verify commit was created successfully
 
-Claude Code has native git integration with permission tiers:
-- **Read-only**: Can view diffs, status, log
-- **Edit**: Can modify files
-- **Shell**: Can run arbitrary commands including git and gh
+### 4.4 Branch Process
+- Create branches with `git checkout -b type/description`
+- Validate with `scripts/validate-branch-name.sh`
+- Push with `git push --set-upstream origin <branch-name>`
 
-### How to Enforce Rules in CLAUDE.md
+### 4.5 Skills System
+- Use available skills for common operations
+- Follow skill-specific instructions and validation
+- Leverage subagents for complex operations
+- Respect permission boundaries of each skill
 
-Add the following to your project's `CLAUDE.md`:
-
-```markdown
-# Git Rules — STRICTLY ENFORCED
-
-## CRITICAL: Staging
-- NEVER use `git add -A`, `git add .`, or `git add --all`
-- ALWAYS use `git add <specific-file>` for each relevant file
-- Run `git diff --cached --name-only` before every commit
-
-## Commits
-- Follow Conventional Commits v1.0.0: <type>(<scope>): <description>
-- Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
-- Imperative mood, lowercase start, no period, ≤72 chars
-
-## Branches
-- Always create: git checkout -b <type>/<kebab-case-name>
-- Never commit to main directly
-
-## PRs
-- Use gh pr create with full template body
-- Title must follow Conventional Commits
-
-## Issues
-- Use gh issue create with full template and labels
-```
-
-### Claude Code Custom Slash Commands
-
-Create `.claude/commands/commit.md` to enforce commit rules:
-
-```markdown
-# /commit - Create a Conventional Commit
-
-When the user runs /commit:
-1. Run `git diff --cached --name-only` to see staged files
-2. If no files staged, ask user to stage specific files (NEVER use git add -A)
-3. Analyze the diff to determine the appropriate type
-4. Generate a Conventional Commits message
-5. Confirm with user before executing git commit
-```
-
-### Claude Code Specific Commands
-
-```bash
-# Claude Code can use its built-in tools or shell
-# All git and gh commands work via shell access
-
-git add src/auth/login.ts
-git commit -m "feat(auth): add login endpoint"
-gh pr create --title "feat(auth): add login" --body "..."
-```
+### 4.6 Code Review
+- Perform internal code review before committing
+- Check for common issues: security, performance, maintainability
+- Verify compliance with project standards
+- Test functionality when possible
 
 ---
 
-## Amp / ampcode (Sourcegraph)
+## 5. Claude Code
 
-### Context File: `AGENTS.md`
+### 5.1 Environment
+- Has built-in git integration capabilities
+- Uses CLAUDE.md for project-specific instructions
+- Implements permission tiers: read-only/edit/shell
+- Supports custom slash commands for workflow enforcement
 
-Amp reads `AGENTS.md` in the project root and parent directories.
+### 5.2 Git Integration
+- Use specific file staging: `git add <file>`
+- Leverage built-in git commands when available
+- Validate operations before execution
 
-### Skills System
+### 5.3 Permission Tiers
+- **Read-only**: Can read files, search, analyze code
+- **Edit**: Can modify files in addition to read operations
+- **Shell**: Can execute shell commands in addition to edit operations
 
-This very skill (`managing-github-events`) IS the enforcement mechanism for Amp.
-When this skill is loaded, Amp MUST follow all rules automatically.
+### 5.4 Commit Requirements
+- Follow conventional commits format exactly
+- Use appropriate type and scope
+- Include breaking change markers when applicable
+- Add BREAKING CHANGE footer for breaking changes
 
-### How to Enforce Rules in AGENTS.md
+### 5.5 Branch Management
+- Create branches with proper type prefixes
+- Use kebab-case for branch names
+- Validate branch names before creation
 
-Add the following to your project's `AGENTS.md`:
-
-```markdown
-# Git Rules
-
-See @~/.config/agents/skills/managing-github-events/SKILL.md for full rules.
-
-## Quick Rules
-- Commits: Conventional Commits format (feat/fix/docs/etc.)
-- Staging: NEVER use `git add -A` or `git add .` — stage specific files only
-- Branches: Always use type/ prefix (feat/, fix/, etc.)
-- PRs: Use gh pr create with full template
-- Issues: Use gh issue create with template + labels
-```
-
-### Amp Specific Tools
-
-```bash
-# Amp uses Bash tool for all git/gh operations
-
-# Stage specific files (Amp's Bash tool)
-git add src/auth/login.ts
-
-# Commit
-git commit -m "feat(auth): add login endpoint"
-
-# Create PR
-gh pr create --title "feat(auth): add login" --body "..."
-
-# Create issue
-gh issue create --title "fix(api): error" --body "..." --label "type:bug,priority:P1"
-
-# Squash merge and delete branch
-gh pr merge 42 --squash --delete-branch
-```
-
-### Amp Permission Configuration
-
-In `~/.config/amp/settings.json`, configure permissions to ask before git operations:
-
-```json
-{
-  "amp.permissions": [
-    {"tool": "Bash", "matches": {"cmd": "*git commit*"}, "action": "ask"},
-    {"tool": "Bash", "matches": {"cmd": "*git push*"}, "action": "ask"},
-    {"tool": "Bash", "matches": {"cmd": "*git add -A*"}, "action": "reject"},
-    {"tool": "Bash", "matches": {"cmd": "*git add .*"}, "action": "reject"},
-    {"tool": "Bash", "matches": {"cmd": "*git add --all*"}, "action": "reject"}
-  ]
-}
-```
+### 5.6 Slash Commands
+- Use `/git` commands for git operations when available
+- Use `/gh` commands for GitHub operations when available
+- Follow custom workflow commands as defined in CLAUDE.md
 
 ---
 
-## iFlow CLI
+## 6. Gemini CLI
 
-### Context File: `IFLOW.md`
+### 6.1 Environment
+- Uses Shell tool for git/gh commands
+- Default behavior may use `git add .` — THIS MUST BE PREVENTED
+- Uses GEMINI.md for instructions
 
-iFlow CLI reads `IFLOW.md` in the project root for persistent instructions.
-Created via the `/init` command.
-
-### Operating Modes
-
-| Mode | Description | Recommendation |
-|------|-------------|----------------|
-| YOLO | Full access, no confirmation | ⚠️ DANGEROUS — not recommended for git ops |
-| Accepting Edits | File modifications only | Safe for code changes |
-| Plan | Plans first, executes after approval | ✅ RECOMMENDED for git operations |
-| Default | Requires permission for actions | ✅ SAFE |
-
-**RECOMMENDATION**: Use **Plan mode** or **Default mode** for any git operations
-to ensure compliance with rules before execution.
-
-### How to Enforce Rules in IFLOW.md
-
-Add the following to your project's `IFLOW.md`:
-
-```markdown
-# Git Rules — STRICTLY ENFORCED
-
-## CRITICAL: Staging
-- NEVER use `git add -A`, `git add .`, or `git add --all`
-- ALWAYS stage individual files: `git add <file>`
-- Verify with `git status` before committing
-
-## Commits
-- Conventional Commits format: <type>(<scope>): <description>
-- Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
-- Imperative mood, lowercase start, no trailing period, max 72 chars
-
-## Branches
-- Create with type prefix: feat/, fix/, hotfix/, refactor/, docs/, ci/
-- Kebab-case, max 50 characters
-- Never commit to main directly
-
-## PRs and Issues
-- Use gh CLI with full templates and labels
-- PR title follows Conventional Commits
-```
-
-### iFlow CLI Commands
-
+### 6.2 Critical Staging Rule
 ```bash
-# iFlow uses Shell tool — same as regular bash commands
+# Gemini CLI MUST use specific file staging:
+git add path/to/specific-file.js
+git add another-specific-file.ts
 
-git add src/auth/login.ts
-git commit -m "feat(auth): add login endpoint"
-gh pr create --title "feat(auth): add login" --body "..."
-gh issue create --title "fix(api): error" --body "..." --label "type:bug,priority:P1"
+# Gemini CLI MUST NEVER use (this is CRITICAL):
+git add .
+git add -A
+git add --all
 ```
 
-### iFlow Custom Commands
+### 6.3 Git Operations
+- Verify individual files before staging
+- Use `git status` to confirm what will be staged
+- Validate with `git diff --cached` before committing
 
-Create `.iflow/commands/commit.toml` for enforced commit workflow:
+### 6.4 Commit Process
+- Use `git commit -m "<validated-conventional-message>"`
+- Include breaking change indicators when applicable
+- Verify commit message format before committing
 
-```toml
-description = "Create a Conventional Commit with proper staging"
-prompt = """
-Before committing:
-1. Run `git status` to check staged files
-2. If files were staged with `git add -A` or `git add .`, REJECT and re-stage individually
-3. Analyze the diff to determine commit type (feat/fix/docs/etc.)
-4. Generate a Conventional Commits message
-5. Confirm with user before running git commit
-NEVER use git add -A, git add ., or git add --all.
-"""
-```
+### 6.5 GitHub Operations
+- Use `gh` commands with full parameters
+- Include proper titles, bodies, and labels
+- Follow templates for consistency
 
 ---
 
-## Quick Reference: Agent Context Files
+## 7. iFlow CLI
 
-To set up a new project for all agents, create these files:
+### 7.1 Environment
+- Uses Shell tool for git/gh commands
+- Uses IFLOW.md for instructions
+- Implements 4 modes: YOLO/Accepting Edits/Plan/Default
+- Supports SubAgent system
 
-```bash
-# For Gemini CLI
-echo "See git rules in managing-github-events skill" > GEMINI.md
+### 7.2 Operational Modes
+- **YOLO Mode**: Quick execution with minimal validation
+- **Accepting Edits**: Review and accept changes before applying
+- **Plan Mode**: Create detailed execution plan before acting
+- **Default Mode**: Standard validation and execution
 
-# For Claude Code
-echo "See git rules in managing-github-events skill" > CLAUDE.md
+### 7.3 Git Integration
+- Use `git add <specific-file>` exclusively
+- Verify file paths before staging
+- Follow conventional commits for all messages
 
-# For Amp
-echo "See @~/.config/agents/skills/managing-github-events/SKILL.md" > AGENTS.md
+### 7.4 SubAgent System
+- Leverage specialized subagents for specific tasks
+- Coordinate between subagents for complex operations
+- Maintain context consistency across subagent interactions
 
-# For iFlow CLI (or use /init command)
-echo "See git rules in managing-github-events skill" > IFLOW.md
-```
+### 7.5 Commit Requirements
+- Follow conventional commits format with validation
+- Include breaking changes with proper markers and footers
+- Use multi-line commits with proper body and footer formatting when needed
 
-Each file SHOULD contain the full set of rules from the "How to Enforce Rules" sections above.
+### 7.6 Quality Assurance
+- Validate changes against project requirements
+- Verify code quality and style compliance
+- Test functionality when possible
+- Ensure documentation updates are included
+
+---
+
+## 8. Agent-Specific Context Files
+
+### 8.1 File Locations
+| Agent | Context File | Purpose |
+|-------|-------------|---------|
+| OpenAI Codex | `CODEX.md` | Codex-specific instructions and patterns |
+| Qwen Code | `AGENTS.md` | (NOT `QWEN.md`) - General agent instructions |
+| Amp (ampcode) | `AGENTS.md` | Skills and permission system configuration |
+| Claude Code | `CLAUDE.md` | Claude-specific workflow and commands |
+| Gemini CLI | `GEMINI.md` | Gemini-specific instructions and restrictions |
+| iFlow CLI | `IFLOW.md` | Mode-specific and subagent configurations |
+
+### 8.2 Context File Contents
+Each agent context file SHOULD include:
+- Project-specific architecture details
+- Key integration points
+- Common patterns and anti-patterns
+- Tooling requirements and configurations
+- Special restrictions or requirements for the agent
+- Examples of proper usage in this specific project
+
+### 8.3 Cross-Reference Requirements
+- All agent context files SHOULD reference `SKILL.md` for universal rules
+- Include links to relevant reference files in `@reference/` directory
+- Maintain consistency with overall project standards
+- Document any agent-specific exceptions to universal rules (with approval)
+
+---
+
+## 9. Compliance Verification
+
+### 9.1 Agent Self-Validation
+Before executing any git operation, agents MUST:
+1. Validate the operation against these rules
+2. Verify file paths and arguments
+3. Check for compliance with conventional formats
+4. Confirm proper permissions and scope
+
+### 9.2 Common Validation Scripts
+Agents SHOULD use these scripts for validation:
+- `scripts/validate-commit-msg.sh` for commit messages
+- `scripts/validate-branch-name.sh` for branch names
+- `scripts/audit-repo.py` for repository compliance
+- `scripts/setup-repo.py` for repository initialization
+
+### 9.3 Error Handling
+When rules are violated:
+- Agents MUST NOT proceed with the operation
+- Agents MUST report the specific rule violation
+- Agents SHOULD suggest the correct approach
+- Agents MUST allow human intervention if needed
+
+---
+
+## 10. Violation Consequences
+
+Violations of any rule in this document SHALL result in:
+1. Immediate halt of the current operation
+2. Detailed error reporting of the violation
+3. Required correction before proceeding
+4. No exceptions to the rules
+5. Escalation to human review if automated correction fails
+
+---
+
+## 11. Updates and Maintenance
+
+This document MUST be updated when:
+- New AI agents are introduced to the workflow
+- Conventional Commits or other standards are updated
+- New security requirements are identified
+- Agent-specific capabilities change
+- Project-specific requirements evolve
+
+Each agent implementation SHOULD include version tracking to ensure compatibility with these rules.

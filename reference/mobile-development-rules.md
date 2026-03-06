@@ -1,133 +1,247 @@
 # Mobile Development Rules
 
-## Overview
-This document defines rules specific to mobile application development. These rules supplement the general GitHub event management rules and should be applied when developing mobile applications.
+> **RFC 2119 Compliance**: The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+> "SHOULD", "SHOULD NOT", "FORBIDDEN", "REJECTED" in this document are to be interpreted as
+> described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 
-## Mobile-Specific Repository Hygiene
+This document enforces **non-negotiable** rules for mobile development projects.
+Violations are REJECTED. No exceptions.
 
-### Core Rules
-- `README.md` MUST include mobile-specific information:
-  - Supported platforms (iOS/Android/both)
-  - Minimum OS versions
-  - Device requirements
-  - Installation instructions for mobile platforms
-- Mobile project files MUST be organized properly:
-  - iOS: `ios/` directory with Xcode project
-  - Android: `android/` directory with Gradle project
-  - React Native: `ios/` and `android/` directories with platform-specific code
-- Mobile-specific assets MUST be stored properly:
-  - App icons in proper sizes for all required densities
-  - Splash screens for all required sizes
-  - App store screenshots (if available)
+---
 
-### Mobile Assets Requirements
-- App icons MUST be provided in all required sizes:
-  - iOS: 20x20, 29x29, 40x40, 57x57, 60x60, 76x76, 83.5x83.5, 1024x1024
-  - Android: 48x48, 72x72, 96x96, 144x144, 192x192, 512x512
-- Images MUST be optimized for mobile devices (WebP format preferred when possible)
-- Video assets MUST be compressed to minimize app bundle size
-- FORBIDDEN: Committing files >50MB without explicit approval
+## 1. Project Structure
 
-### Mobile-Specific Branch Management
-- Mobile release branches MUST use format: `release/[platform]/v{MAJOR}.{MINOR}.{PATCH}`
-  - Examples: `release/ios/v1.2.0`, `release/android/v1.2.0`
-- Platform-specific feature branches SHOULD use format: `feat/[platform]/feature-name`
-  - Examples: `feat/ios/push-notifications`, `feat/android/location-services`
+### Android (Java/Kotlin) Projects
 
-## Mobile-Specific Commit Rules
+- `app/src/main/java/` — Application source code
+- `app/src/main/res/` — Resources (layouts, drawables, values)
+- `app/src/main/AndroidManifest.xml` — Application manifest
+- `app/build.gradle` — Module build configuration
+- `build.gradle` — Project build configuration
+- `gradle.properties` — Gradle settings
+- `gradlew`, `gradlew.bat` — Gradle wrapper scripts
+- `settings.gradle` — Module inclusion settings
 
-### Mobile-Specific Commit Types
-- `ios`: Changes specific to iOS platform
-- `android`: Changes specific to Android platform
-- `mobile`: Changes affecting both mobile platforms
-- `perf(mobile)`: Performance improvements specific to mobile
-- `fix(ios)`: Bug fixes specific to iOS
-- `fix(android)`: Bug fixes specific to Android
-- `feat(ios)`: New features for iOS
-- `feat(android)`: New features for Android
+### iOS (Swift) Projects
 
-### Examples
+- `{ProjectName}/` — Main application source directory
+- `{ProjectName}/Assets.xcassets/` — Image and asset catalog
+- `{ProjectName}/Base.lproj/` — Storyboard and localization files
+- `{ProjectName}.xcodeproj/` — Xcode project bundle
+- `Podfile` — CocoaPods dependency manager file
+- `Podfile.lock` — Locked dependency versions
+
+### Cross-Platform (React Native/Flutter) Projects
+
+#### React Native
+- `index.js` — Entry point
+- `package.json` — Dependencies and scripts
+- `android/`, `ios/` — Native platform directories
+- `src/` — Source code
+- `assets/` — Static assets
+
+#### Flutter
+- `lib/` — Dart source code
+- `assets/` — Static assets
+- `ios/`, `android/` — Platform-specific code
+- `pubspec.yaml` — Dependencies and assets
+
+---
+
+## 2. Version Management
+
+### Android Versioning
+- `versionCode` — Incremental integer, MUST be unique per release
+- `versionName` — Semantic version string (e.g., "1.2.3")
+- Both MUST be updated before each release
+- `versionCode` MUST be incremented for every build (even internal)
+
+### iOS Versioning
+- `CFBundleShortVersionString` — Marketing version (e.g., "1.2.3")
+- `CFBundleVersion` — Build number (e.g., "123")
+- Build number MUST be incremented for every build
+- Marketing version SHOULD follow SemVer 2.0.0
+
+---
+
+## 3. Build Configuration
+
+### Android (Gradle)
+- Use `minSdk`, `targetSdk`, `compileSdk` appropriately
+- Enable code shrinking and obfuscation for release builds
+- Use `buildTypes` for debug/release configurations
+- Use `productFlavors` for different app variants
+
+### iOS (Xcode)
+- Use different build configurations for Debug/Release
+- Properly set bundle identifiers for different environments
+- Use build settings inheritance appropriately
+
+### Cross-Platform
+- Use environment variables for configuration
+- Separate build configurations for different environments
+- Properly configure platform-specific settings
+
+---
+
+## 4. Security Rules
+
+### Data Storage
+- Sensitive data MUST NOT be stored in plain text
+- Use platform-specific secure storage:
+  - Android: Android Keystore System, EncryptedSharedPreferences
+  - iOS: Keychain Services
+- For cross-platform: Use secure storage libraries (e.g., react-native-keychain)
+- Temporary files MUST be encrypted or cleared after use
+
+### Network Security
+- All network requests MUST use HTTPS with TLS 1.2 or higher
+- Certificate pinning SHOULD be implemented for sensitive apps
+- Never trust user-provided certificates in production
+- API keys MUST NOT be hardcoded in source code
+
+### Authentication
+- Use platform-appropriate authentication methods
+- Implement proper session management
+- Use refresh token mechanisms when appropriate
+- Biometric authentication when available and appropriate
+
+---
+
+## 5. Performance Requirements
+
+### Memory Management
+- Android: Monitor for memory leaks with LeakCanary
+- iOS: Use Instruments to detect retain cycles
+- Cross-platform: Follow platform-specific memory management patterns
+- Profile memory usage regularly
+
+### Battery Optimization
+- Minimize background operations
+- Use platform-specific background processing APIs appropriately
+- Optimize network requests to reduce battery drain
+- Use location services efficiently
+
+### UI Responsiveness
+- Main/UI thread MUST remain responsive
+- Heavy operations MUST be performed on background threads
+- Use platform-specific async patterns appropriately
+- Implement proper loading states
+
+---
+
+## 6. UI/UX Guidelines
+
+### Platform Compliance
+- Android: Follow Material Design guidelines
+- iOS: Follow Human Interface Guidelines
+- Cross-platform: Adapt to platform-specific patterns
+- Use native navigation patterns
+
+### Accessibility
+- Support screen readers (TalkBack/VoiceOver)
+- Provide adequate color contrast
+- Support dynamic font sizes
+- Use semantic labels appropriately
+
+### Internationalization
+- All user-facing strings MUST be externalized
+- Support RTL languages where appropriate
+- Consider cultural differences in UI
+- Use platform-specific localization tools
+
+---
+
+## 7. Testing Requirements
+
+### Unit Tests
+- Android: JUnit for Java/Kotlin, Espresso for UI
+- iOS: XCTest for unit tests, UI tests with XCTest
+- Cross-platform: Jest for React Native, flutter_test for Flutter
+- Achieve minimum 80% code coverage
+
+### Integration Tests
+- Test critical user flows
+- Mock external dependencies appropriately
+- Test error conditions and edge cases
+- Test different network conditions
+
+### Device Testing
+- Test on multiple screen sizes and resolutions
+- Test on different OS versions (minimum supported + latest)
+- Test on different device capabilities (performance, memory)
+- Use emulators/simulators and real devices
+
+---
+
+## 8. Distribution Rules
+
+### App Store Requirements
+- Follow platform-specific app store guidelines
+- Proper app metadata (descriptions, screenshots, privacy policy)
+- App review compliance
+- Privacy policy MUST be accessible
+
+### Release Process
+- All code MUST pass CI checks before release
+- Beta testing for significant features
+- Staged rollouts for major updates
+- Rollback plan for critical issues
+
+### Version Control
+- Git tags MUST follow format: `v{MAJOR}.{MINOR}.{PATCH}`
+- Release branches MUST follow format: `release/v{MAJOR}.{MINOR}`
+- Hotfix branches MUST follow format: `hotfix/{issue-number}`
+
+---
+
+## 9. Termux/Android-Specific Rules
+
+### Environment Considerations
+- When developing on Termux, ensure proper Android SDK setup
+- Use `termux-setup-storage` to access device storage when needed
+- Be mindful of Termux's limitations compared to full Android Studio
+- For production builds, use proper Android development environment
+
+### Permissions
+- Declare all required permissions in manifest
+- Implement runtime permission requests where appropriate
+- Explain permission rationale to users
+- Follow privacy best practices
+
+### Dependencies
+- Keep native dependencies up-to-date
+- Audit for security vulnerabilities
+- Prefer stable versions over alpha/beta releases
+- Document any custom native modules
+
+---
+
+## 10. Common Violations (FORBIDDEN)
+
+- Hardcoded API keys, secrets, or sensitive data
+- Direct SQL queries without parameterization (SQL injection)
+- Improper input validation leading to security vulnerabilities
+- Using deprecated platform APIs without proper migration plan
+- Pushing to main branch without proper review process
+- Committing build artifacts or intermediate files
+- Using debug builds for production distribution
+- Violating platform-specific content policies
+- Not following accessibility guidelines
+- Ignoring performance bottlenecks
+
+---
+
+## 11. Compliance Verification
+
+Run `scripts/mobile-audit.sh` to verify compliance with these rules:
+
+```bash
+# Check project structure
+# Verify security configurations
+# Validate build configurations
+# Audit dependencies
+# Check for common vulnerabilities
 ```
-✅ feat(ios): add push notification support
-✅ feat(android): implement fingerprint authentication
-✅ fix(mobile): resolve memory leak in image loading
-✅ perf(ios): optimize image caching for lower-end devices
-❌ feat: add push notification support  (too generic for mobile project)
-```
 
-## Mobile-Specific Issue Management
-
-### Mobile Bug Reports
-Mobile bug reports MUST additionally include:
-- Device model and OS version
-- App version
-- Network conditions (WiFi/Cellular/Offline)
-- Battery level (if relevant to issue)
-- Any custom device configurations (rooted/jailbroken)
-
-### Mobile Feature Requests
-Mobile feature requests SHOULD specify:
-- Target platform(s) (iOS/Android/both)
-- Any platform-specific design guidelines (Material Design for Android, Human Interface Guidelines for iOS)
-- Performance requirements (frame rate, loading times)
-- Offline capability requirements
-
-## Mobile-Specific PR Rules
-
-### Mobile PR Requirements
-- PR description MUST specify testing devices and OS versions
-- PR description MUST include performance impact (if applicable)
-- Screenshots REQUIRED for UI changes
-- Video demonstration RECOMMENDED for complex UI interactions
-- Testing on multiple device sizes REQUIRED for UI changes
-
-### Mobile-Specific Review Process
-- iOS changes MUST be reviewed by iOS developer
-- Android changes MUST be reviewed by Android developer
-- Cross-platform changes MUST be reviewed by developers from both platforms
-- Performance changes MUST be reviewed by performance specialist
-
-## Mobile-Specific Release Management
-
-### Mobile Release Requirements
-- Mobile releases MUST include platform-specific changelogs
-- Release notes MUST be written in language appropriate for app store users
-- App store metadata MUST be updated with each release
-- Beta testing MUST be completed before public release
-
-### Mobile Versioning
-- Mobile apps SHOULD follow SemVer but consider platform-specific requirements:
-  - Major: Breaking API changes, significant UI redesigns, platform migrations
-  - Minor: New features, UI enhancements, platform-specific improvements
-  - Patch: Bug fixes, security patches, performance improvements
-- iOS and Android versions SHOULD be kept in sync when possible
-
-## Mobile-Specific Security
-
-### Mobile Security Requirements
-- Hardcoded credentials MUST NOT be committed (API keys, secrets, certificates)
-- Sensitive data MUST NOT be stored in plain text on device
-- Network calls MUST use HTTPS with certificate pinning when possible
-- App MUST implement proper permissions handling
-- Biometric authentication SHOULD be implemented when appropriate
-
-### Mobile-Specific Vulnerabilities
-- FORBIDDEN: Storing sensitive data in app preferences without encryption
-- FORBIDDEN: Using insecure protocols (HTTP, FTP) for sensitive data
-- FORBIDDEN: Implementing custom encryption algorithms
-- Sensitive data MUST be cleared from memory when no longer needed
-
-## Mobile CI/CD Rules
-
-### Mobile-Specific CI Requirements
-- Builds MUST be tested on multiple device configurations
-- Automated UI tests MUST run on both simulators/emulators and real devices
-- Performance tests MUST be run for each platform
-- App store validation MUST be performed before release builds
-
-### Mobile-Specific CD Requirements
-- Beta releases MUST be distributed through appropriate platform services
-  - iOS: TestFlight
-  - Android: Google Play Console Internal Testing/Beta
-- Production releases MUST follow platform-specific approval processes
-- Rollback procedures MUST be ready before production releases
+All checks MUST pass before code is accepted for review.
